@@ -3,30 +3,30 @@
     "nombre": "Bicicleta",
     "venta": true,
     "precio": 230.15,
-    "foto": "bici.jpg",
+    "foto": "./public/images/advertisements/bicicleta.jpg",
     "tags": [ "lifestyle", "motor"]
   }, {
     "nombre": "iPhone 3GS",
     "venta": false,
     "precio": 50.00,
-    "foto": "iphone.png",
+    "foto": "./public/images/advertisements/iphone3gs.png",
     "tags": [ "lifestyle", "mobile"]
   }, {
     "nombre": "Ipad Mini 2",
     "venta": true,
     "precio": 75.20,
-    "foto": "iphone.png",
+    "foto": "./public/images/advertisements/ipadmini2.png",
     "tags": [ "lifestyle", "mobile"]
   }, {
     "nombre": "Estrella De La Muerte",
     "venta": false,
-    "precio": 1500.00,
-    "foto": "iphone.png",
+    "precio": 30.00,
+    "foto": "./public/images/advertisements/estrellamuerte.jpg",
     "tags": [ "lifestyle", "motor"]
   } ],
   "users": [{
     "name": "admin",
     "email": "admin@admin.com",
-    "pass": "admin"
+    "pass": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
   }]
 }

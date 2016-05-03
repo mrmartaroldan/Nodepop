@@ -3,7 +3,7 @@
  */
 'use strict';
 
-//Cargo los módulos de Express, Mongoose y Sha256
+//Cargo los módulos de Express, Mongoose,Sha256 y JSONWebToken
 var express = require('express');
 var router = express.Router();
 
@@ -11,6 +11,9 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 var sha = require('sha256');
+
+var jwt = require('jsonwebtoken');
+var config = require('../../../local_config');
 
 router.post('/', function (req, res, next) {
 
@@ -41,6 +44,31 @@ router.post('/', function (req, res, next) {
 
         res.json({ success: true, saved: saved});
     });
+});
+
+router.post('/authenticate', function (req, res) {
+    
+    var email = req.query.email;
+    var pass = sha(req.query.pass);
+    console.log(pass);
+    
+    User.findOne({email: email}).exec(function (err, user) {
+        if (err){
+            return res.status(500).json({success: false, error: err});
+        }
+        if (!user) {
+            return res.status(401).json({success: false, error: 'Auth failed. User not found.'});
+        }
+        if (user.pass !== pass){
+            return res.status(401).json({success: false, error: 'Auth failed. Invalid password.'});
+        }
+
+        var token = jwt.sign({ id: user._id}, config.jwt.secret, {expiresIn: '2 days'});
+
+        res.json({success: true, token: token});
+    })
+    
+    
 });
 
 module.exports = router;
