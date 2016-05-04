@@ -1,13 +1,13 @@
 /**
  * Created by Alex on 27/4/16.
  */
-"use strict";
+'use strict';
 
 //Cargo los módulos
 var mongoose = require('mongoose');
 
 //Creo el Schema del modelo
-var userSchema = mongoose.Schema({ 
+var userSchema = mongoose.Schema({
     name: String,
     email: String,
     pass: String,

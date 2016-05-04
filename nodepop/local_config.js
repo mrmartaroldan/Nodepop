@@ -7,5 +7,4 @@ module.exports = {
     jwt: {
         secret: 'AdSfdSgdhFJHgbfdVfdHVdfUrjsnfKSsdFrgrWrfDvDf'
     }
-    
 };

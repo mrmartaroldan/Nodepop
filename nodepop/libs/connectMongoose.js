@@ -9,7 +9,7 @@ var conn = mongoose.connection;
 //handlers de eventos de conexion
 conn.on('error', console.log.bind(console, 'connection error'));
 
-conn.once('open', function (){
+conn.once('open', function() {
 
     console.log('Connected');
 

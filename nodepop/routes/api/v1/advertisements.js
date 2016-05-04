@@ -11,13 +11,8 @@ var Advertisement = mongoose.model('Advertisement');
 
 var jwtAuth = require('../../../libs/jwtAuth');
 
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
 
-    
 });
-
-
-
-
 
 module.exports = router;
