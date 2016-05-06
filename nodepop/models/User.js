@@ -8,23 +8,18 @@ var mongoose = require('mongoose');
 
 //Creo el Schema del modelo
 var userSchema = mongoose.Schema({
-    name: { 
+    name: {
         type: String,
-        required: true,
         index: true
     },
-    email: { 
+    email: {
         type: String,
-        required: true,
         index: true
     },
-    pass: {
-        type: String,
-        required: true
-    },
+    pass: String,
     platform: {type: String, enum: ['ios', 'android']},
     token: String
 });
 
 //Cargo el modelo
-var user = mongoose.model('User', userSchema);
+mongoose.model('User', userSchema);

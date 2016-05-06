@@ -8,13 +8,21 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+var config = require('../../../local_config');
+var translate = require('google-translate')(config.api.key);
+
 router.post('/', function(req, res, next) {
     var email = req.query.email;
     var token = req.query.token;
     var platform = req.query.platform;
+    var language = req.query.language || 'en';
 
     if (!platform) {
-        return res.status(400).send('Error: Es necesario especificar una plataforma');
+        translate.translate('Platform is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
     }
 
     if (!email) {

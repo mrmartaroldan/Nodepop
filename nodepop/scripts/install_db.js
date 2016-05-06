@@ -17,25 +17,25 @@ mongoClient.connect(url, function(err, db) {
     }
 
     //Elimino las tablas de la base de datos
-    db.collection('advertisements').deleteMany({}, function(err,  results) {
+    db.collection('advertisements').deleteMany({}, function(err) {
 
         //Compruebo si hay error
         if (err) {
-            return console.log('Error al eliminar las tablas de anuncios');
+            return console.log('Failed to remove ads');
         }
 
-        console.log('Tablas de anuncios eliminadas con éxito');
+        console.log('Successfully remove ads');
 
     });
 
-    db.collection('users').deleteMany({}, function(err,  results) {
+    db.collection('users').deleteMany({}, function(err) {
 
         //Compruebo si hay error
         if (err) {
-            return console.log('Error al eliminar las tablas de usuarios');
+            return console.log('Failed to remove users');
         }
 
-        console.log('Tablas de usuarios eliminadas con éxito:');
+        console.log('Successfully remove users');
 
     });
 
@@ -44,10 +44,10 @@ mongoClient.connect(url, function(err, db) {
 
         //Compruebo si hay error al insertar los anuncios
         if (err) {
-            return console.log('Error al añadir el JSON');
+            return console.log('Failed to add ads');
         }
 
-        console.log('Se han guardo los siguiente anuncios: ', results.ops);
+        console.log('The following advertisements have been saved: ', results.ops);
 
     });
 
@@ -55,10 +55,10 @@ mongoClient.connect(url, function(err, db) {
 
         //Compruebo si hay error al insertar los anuncios
         if (err) {
-            return console.log('Error al añadir el JSON');
+            return console.log('Failed to add users');
         }
 
-        console.log('Se han guardo los siguiente usuarios: ', results.ops);
+        console.log('The following users have been saved: ', results.ops);
 
     });
 

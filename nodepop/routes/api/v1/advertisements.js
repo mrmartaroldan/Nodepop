@@ -11,7 +11,9 @@ var Advertisement = mongoose.model('Advertisement');
 
 var jwtAuth = require('../../../libs/jwtAuth');
 
-router.get('/', function(req, res, next) {
+router.use(jwtAuth());
+
+router.get('/', function(req, res) {
 
     var name = req.query.name;
     var price = req.query.price;
@@ -20,18 +22,17 @@ router.get('/', function(req, res, next) {
     var start = parseInt(req.query.start) || 0;
     var limit = parseInt(req.query.limit) || null;
     var sort = req.query.sort || null;
-    
 
-    var filter ={};
+    var filter = {};
 
     if (name) {
-        
-        var $regex = new RegExp('^' + name, "i");
+
+        var $regex = new RegExp('^' + name, 'i');
         filter.name = {$regex};
     }
 
     if (price) {
-        
+
         var number = price.search('-');
 
         if (number !== -1) {
@@ -49,19 +50,22 @@ router.get('/', function(req, res, next) {
             }
         }
     }
-    
+
     if (sale) {
         filter.sale = sale;
     }
-    
-    if (tags) {
+
+    if (typeof tags === 'string') {
 
         filter.tags = tags;
-        
+
+    }else if (typeof tags === 'object') {
+        var $all = tags;
+        filter.tags = {$all};
     }
 
-    Advertisement.list(filter, start, limit, sort, function (err, results) {
-        
+    Advertisement.list(filter, start, limit, sort, function(err, results) {
+
         if (err) {
             return res.json({success: false, error: err});
         }

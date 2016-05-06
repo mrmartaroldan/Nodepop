@@ -6,5 +6,8 @@
 module.exports = {
     jwt: {
         secret: 'AdSfdSgdhFJHgbfdVfdHVdfUrjsnfKSsdFrgrWrfDvDf'
+    },
+    api: {
+        key: 'AIzaSyA6Gni29zXCpOcwRFEoQSfwvl7XUqoWPNc'
     }
 };

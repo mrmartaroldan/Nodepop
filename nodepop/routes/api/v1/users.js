@@ -14,18 +14,50 @@ var sha = require('sha256');
 
 var jwt = require('jsonwebtoken');
 var config = require('../../../local_config');
+var translate = require('google-translate')(config.api.key);
 
 router.post('/', function(req, res, next) {
 
     //Obtengo los parámetros de la Query
     var name = req.query.name;
-    var pass = sha(req.query.pass);
+    var pass;
     var email = req.query.email;
     var platform = req.query.platform;
     var token = req.query.token;
+    var language = req.query.language || 'en';
 
     if (!platform) {
-        return res.status(400).send('Error: Es necesario especificar una plataforma');
+        translate.translate('Platform is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
+    }
+
+    if (!email) {
+        translate.translate('Email is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
+    }
+
+    if (typeof req.query.pass === 'undefined') {
+        translate.translate('Password is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
+    }else {
+        pass = sha(req.query.pass);
+    }
+
+    if (!name) {
+        translate.translate('Name is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
     }
 
     //Creo el usuario
@@ -33,9 +65,8 @@ router.post('/', function(req, res, next) {
 
     //Valido el usuario
     try {
-        var errors = userModel.validateSync();
+        userModel.validateSync();
     }catch (errors) {
-        console.log(errors);
         next(errors);
     }
 
@@ -54,8 +85,27 @@ router.post('/', function(req, res, next) {
 router.post('/authenticate', function(req, res) {
 
     var email = req.query.email;
-    var pass = sha(req.query.pass);
-    console.log(pass);
+    var pass;
+    var language = req.query.language || 'en';
+    console.log(email);
+
+    if (typeof email === 'undefined') {
+        translate.translate('Email is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
+    }
+
+    if (typeof req.query.pass === 'undefined') {
+        translate.translate('Password is needed', language, function(err, translated) {
+            return res.status(401).json({success: false, error: translated.translatedText});
+        });
+
+        return;
+    }else {
+        pass = sha(req.query.pass);
+    }
 
     User.findOne({email: email}).exec(function(err, user) {
         if (err) {
@@ -63,11 +113,19 @@ router.post('/authenticate', function(req, res) {
         }
 
         if (!user) {
-            return res.status(401).json({success: false, error: 'Auth failed. User not found.'});
+            translate.translate('Authentication failed. User not found.', language, function(err, translated) {
+                return res.status(401).json({success: false, error: translated.translatedText});
+            });
+
+            return;
         }
 
         if (user.pass !== pass) {
-            return res.status(401).json({success: false, error: 'Auth failed. Invalid password.'});
+            translate.translate('Authentication failed. Invalid password.', language, function(err, translated) {
+                return res.status(401).json({success: false, error: translated.translatedText});
+            });
+
+            return;
         }
 
         var token = jwt.sign({ id: user._id}, config.jwt.secret, {expiresIn: '2 days'});

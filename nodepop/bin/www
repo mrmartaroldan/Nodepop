@@ -27,7 +27,6 @@ if (cluster.isMaster) {
     //Hago un fork para cada CPU
     for (var i = 0; i < numCpus; i++) {
         cluster.fork();
-        console.log('cluster creado');
     }
 
 //Si no es master inicio el servidor normal
