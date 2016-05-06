@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "singlecore": "node ./bin/www_singlecore",
-    "installDB": "nodemon ./scripts/install_db.js"
+    "installDB": "nodemon ./scripts/install_db.js",
+    "debug": ""
   },
   "dependencies": {
     "body-parser": "~1.13.2",

@@ -4,12 +4,12 @@
 'use strict';
 
 //Cargo módulos y el archivo advertisementJson.json
-var MongoClient = require('mongodb').MongoClient;
+var mongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017/nodepop';
 var json = require('../advertisementsJson.json');
 
 //Creo la conexión con la base de datos
-MongoClient.connect(url, function(err, db) {
+mongoClient.connect(url, function(err, db) {
 
     //Compruebo si hay error
     if (err) {
@@ -47,7 +47,7 @@ MongoClient.connect(url, function(err, db) {
             return console.log('Error al añadir el JSON');
         }
 
-        console.log('Se han guardo los siguiente anuncios: ', results);
+        console.log('Se han guardo los siguiente anuncios: ', results.ops);
 
     });
 
@@ -58,7 +58,7 @@ MongoClient.connect(url, function(err, db) {
             return console.log('Error al añadir el JSON');
         }
 
-        console.log('Se han guardo los siguiente usuarios: ', results);
+        console.log('Se han guardo los siguiente usuarios: ', results.ops);
 
     });
 
