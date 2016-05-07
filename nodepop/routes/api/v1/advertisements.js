@@ -3,6 +3,7 @@
  */
 'use strict';
 
+//Cargo los módulos de Express, el modelo y la autenticación
 var express = require('express');
 var router = express.Router();
 
@@ -11,10 +12,12 @@ var Advertisement = mongoose.model('Advertisement');
 
 var jwtAuth = require('../../../libs/jwtAuth');
 
+//Incluyo la autenticación
 router.use(jwtAuth());
 
 router.get('/', function(req, res) {
 
+    //Recojo los parámetros de la query string
     var name = req.query.name;
     var price = req.query.price;
     var tags = req.query.tag;
@@ -25,6 +28,7 @@ router.get('/', function(req, res) {
 
     var filter = {};
 
+    //Compruebo los datos que me han pasado y cuáles no, para hacer el filtro
     if (name) {
 
         var $regex = new RegExp('^' + name, 'i');
@@ -64,8 +68,10 @@ router.get('/', function(req, res) {
         filter.tags = {$all};
     }
 
+    //Realizo la búsqueda con el filtro que me han pasado
     Advertisement.list(filter, start, limit, sort, function(err, results) {
 
+        //Compruebo si hay error
         if (err) {
             return res.json({success: false, error: err});
         }
