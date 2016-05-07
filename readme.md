@@ -6,6 +6,8 @@ Para probar la API, es necesario tener la base de datos activa y, a continuació
 
 A continuación, se inicia la API:
 
+```npm install```
+
 ```nodemon```
 
 También se puede hacer uso de varios scripts:
@@ -41,6 +43,8 @@ Una vez dentro, iniciaremos el servidor redis, que podemos instalar con homebrew
 ```redis-server```
 
 Para iniciar finalmente la documentación ejecutar el comando:
+
+```npm install```
 
 ```npm run start```
 
