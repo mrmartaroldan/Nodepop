@@ -1,0 +1,147 @@
+{"name": "Nodepop API",
+  "description": "API creada para aplicaciones IOS o Android para el módulo Javascript, NodeJS, Express y MongoDB.",
+  "protocol": "rest",
+  "basePath": "http://localhost:3000",
+  "publicPath": "/api/v1",
+  "resources": {
+    "Anuncios": {
+      "methods": {
+        "MethodA1": {
+          "name": "Lista de anuncios",
+          "path": "/advertisements",
+          "httpMethod": "GET",
+          "description": "Devuelve una lista de anuncios que puedes filtrar por los siguientes parámetros.",
+          "parameters": {
+            "tag": {
+              "type": "string",
+              "default": "",
+              "description": "Pueden ser: lifestyle, motor, mobile y work. Si realizas tú mismo la petición puedes incluir un filtro por dos o más tags de la siguiente forma: http://localhost:3000/api/v1/advertisements?tag=lifestyle&tag=motor."
+            },
+            "sale": {
+              "type": "string",
+              "default": "",
+              "description": "Valdrá true, en caso de que quieras ver los artículos en venta, y false para los artículos que se buscan."
+            },
+            "price": {
+              "type": "string",
+              "default": "",
+              "description": "Para filtar por precio tiene que ser de las siguientes formas: '10-' para precio mayor que 10 euros, '-10' para precio menor que 10 euros, '10-50' para precios entre 10 y 50 euros y '50' para precios exactos."
+            },
+            "name": {
+              "type": "string",
+              "default": "",
+              "description": "Puedes buscar por nombre poniendo el nombre completo del artículo o simplemente las iniciales del artículo"
+            },
+            "language": {
+              "type": "string",
+              "default": "",
+              "description": "Idioma que quieres que te devuelva algún posible error, por defecto los errores están en inglés. Por ejemplo: 'es' para español o 'de' para alemán."
+            },
+            "token": {
+              "type": "string",
+              "default": "",
+              "description": "Para obtenerlo, primero tienes que autenticarte y recibirás tu token de acceso"
+            }
+          }
+        }
+      }
+    },
+    "Usuarios": {
+      "methods": {
+        "MethodA1Users": {
+          "name": "Crear Usuario",
+          "path": "/users",
+          "httpMethod": "POST",
+          "description": "Puedes crear un usuario pasando los parámetros siguientes y, al crearlo, te devuelve el usuario que has creado.",
+          "parameters": {
+            "name": {
+              "type": "string",
+              "default": "",
+              "description": "Nombre de usuario."
+            },
+            "email": {
+              "type": "string",
+              "default": "",
+              "description": "Dirección de email del usuario."
+            },
+            "pass": {
+              "type": "string",
+              "default": "",
+              "description": "Contraseña.Sólo tú sabrás esa contraseña, en la api se guarda encriptada."
+            },
+            "platform": {
+              "type": "string",
+              "default": "",
+              "description": "Puede ser IOS o Android dependiendo del dispositivo desde el que hagas uso de la app."
+            },
+            "language": {
+              "type": "string",
+              "default": "",
+              "description": "Idioma que quieres que te devuelva algún posible error, por defecto los errores están en inglés. Por ejemplo: 'es' para español o 'de' para alemán."
+            },
+            "token": {
+              "type": "string",
+              "default": "",
+              "description": "Token de push que te da Apple o Google para poder recibir notificaciones de la app."
+            }
+          }
+        },
+        "MethodA1UsersAuthenticate": {
+          "name": "Autenticación",
+          "path": "/users/authenticate",
+          "httpMethod": "POST",
+          "description": "Si estás registrado, devuelve un token para poder ver la lista de anuncios",
+          "parameters": {
+            "email": {
+              "type": "string",
+              "default": "",
+              "description": "Email de tu cuenta de usuario"
+            },
+            "pass": {
+              "type": "string",
+              "default": "",
+              "description": "Contraseña"
+            },
+            "language": {
+              "type": "string",
+              "default": "",
+              "description": "Idioma que quieres que te devuelva algún posible error, por defecto los errores están en inglés. Por ejemplo: 'es' para español o 'de' para alemán."
+            }
+          }
+        }
+      }
+    },
+    "Tokens de Push": {
+      "methods": {
+        "MethodA1Tokens": {
+          "name": "Agregar Tokens de Push",
+          "path": "/addToken",
+          "httpMethod": "POST",
+          "description": "Permite agregar los tokens de push de usuarios registrados y no registrados. Devuelve la plataforma y el token enviados si eres usuario no registrado y, si eres usuario registrado, los datos del usuario que modificastes.",
+          "parameters": {
+            "email": {
+              "type": "string",
+              "default": "",
+              "description": "Si tienes un usuario ya creado, introduce aquí tu email para actualizar tu usuario con el token."
+            },
+            "platform": {
+              "type": "string",
+              "default": "",
+              "description": "Puede ser IOS o Android, dependiendo de qué plataforma uses"
+            },
+            "token": {
+              "type": "string",
+              "default": "",
+              "description": "Token de push que te da Apple o Google para recibir notificaciones de la app."
+            },
+            "language": {
+              "type": "string",
+              "default": "",
+              "description": "Idioma que quieres que te devuelva algún posible error, por defecto los errores están en inglés. Por ejemplo: 'es' para español o 'de' para alemán."
+            }
+          }
+        }
+      }
+    }
+  }
+}

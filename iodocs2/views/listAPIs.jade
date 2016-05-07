@@ -1,0 +1,10 @@
+extends layout
+block content
+  h1 Nodepop API
+
+  h2 Haz click en el enlace para acceder a la documentación
+
+
+  ul
+     - for (var api in apiInfo)
+         li: a(href = api) #{apiInfo[api].name}
