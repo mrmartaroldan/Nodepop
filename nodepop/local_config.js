@@ -8,6 +8,6 @@ module.exports = {
         secret: 'AdSfdSgdhFJHgbfdVfdHVdfUrjsnfKSsdFrgrWrfDvDf'
     },
     api: {
-        key: 'AIzaSyA6Gni29zXCpOcwRFEoQSfwvl7XUqoWPNc'
+        key: 'AIzaSyB8iV-SJwvz5Io44TgWFHNT5yBs4Z0qD5Y'
     }
 };

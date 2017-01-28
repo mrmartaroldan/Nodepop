@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 var config = require('../../../local_config');
-var translate = require('google-translate')(config.api.key);
+var translate = require('../../../translate.json');
 
 router.post('/', function(req, res, next) {
 
@@ -23,19 +23,24 @@ router.post('/', function(req, res, next) {
 
     //Compruebo los parámetros que me han pasado
     if (!platform) {
-        translate.translate('Platform is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
+        var message = translate.PLATFORM_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
 
-        return;
+        return res.status(401).json({success: false, error: message});
     }
 
     if (!token) {
-        translate.translate('Token is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
-
-        return;
+        message = translate.TOKEN_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
+        return res.status(401).json({success: false, error: message});
     }
 
     //Compruebo si hay email para actualizar usuario o no
@@ -50,6 +55,7 @@ router.post('/', function(req, res, next) {
             return res.json({success: true, results: saved});
 
         });
+        return;
     }
 
     //En caso de que haya usuario los busco por email y lo actualizo con los datos que me han pasado

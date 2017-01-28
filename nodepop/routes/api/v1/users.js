@@ -14,7 +14,7 @@ var sha = require('sha256');
 
 var jwt = require('jsonwebtoken');
 var config = require('../../../local_config');
-var translate = require('google-translate')(config.api.key);
+var translate = require('../../../translate.json');
 
 router.post('/', function(req, res, next) {
 
@@ -27,37 +27,52 @@ router.post('/', function(req, res, next) {
     var language = req.query.language || 'en';
 
     if (!platform) {
-        translate.translate('Platform is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
+        var message = translate.PLATFORM_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
 
-        return;
+        return res.status(401).json({success: false, error: message});
+
     }
 
     if (!email) {
-        translate.translate('Email is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
+            message = translate.EMAIL_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
 
-        return;
+
+        return res.status(401).json({success: false, error: message});
     }
 
     if (typeof req.query.pass === 'undefined') {
-        translate.translate('Password is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
+            message = translate.PASSWORD_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
+        return res.status(401).json({success: false, error: message});
 
-        return;
     }else {
         pass = sha(req.query.pass);
     }
 
     if (!name) {
-        translate.translate('Name is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
+        message = translate.NAME_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
 
-        return;
+        return res.status(401).json({success: false, error: message});
+
     }
 
     //Creo el usuario
@@ -87,22 +102,27 @@ router.post('/authenticate', function(req, res) {
     var email = req.query.email;
     var pass;
     var language = req.query.language || 'en';
-    console.log(email);
 
     if (typeof email === 'undefined') {
-        translate.translate('Email is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
 
-        return;
+        var message = translate.EMAIL_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
+        return res.status(401).json({success: false, error: message});
     }
 
     if (typeof req.query.pass === 'undefined') {
-        translate.translate('Password is needed', language, function(err, translated) {
-            return res.status(401).json({success: false, error: translated.translatedText});
-        });
 
-        return;
+        message = translate.PASSWORD_IS_NEEDED;
+        if (language == 'es'){
+            message = message.es
+        }else if (language == 'en'){
+            message = message.en
+        }
+        return res.status(401).json({success: false, error: message});
     }else {
         pass = sha(req.query.pass);
     }
@@ -113,19 +133,27 @@ router.post('/authenticate', function(req, res) {
         }
 
         if (!user) {
-            translate.translate('Authentication failed. User not found.', language, function(err, translated) {
-                return res.status(401).json({success: false, error: translated.translatedText});
-            });
 
-            return;
+            message = translate.AUTHENTICATION_FAILED_USER_NOT_FOUND;
+            if (language == 'es'){
+                message = message.es
+            }else if (language == 'en'){
+                message = message.en
+            }
+                return res.status(401).json({success: false, error: message});
+
         }
 
         if (user.pass !== pass) {
-            translate.translate('Authentication failed. Invalid password.', language, function(err, translated) {
-                return res.status(401).json({success: false, error: translated.translatedText});
-            });
+            message = translate.AUTHENTICATION_FAILED_INVALID_PASSWORD;
+            if (language == 'es'){
+                message = message.es
+            }else if (language == 'en'){
+                message = message.en
+            }
 
-            return;
+            return res.status(401).json({success: false, error: message});
+
         }
 
         var token = jwt.sign({ id: user._id}, config.jwt.secret, {expiresIn: '2 days'});

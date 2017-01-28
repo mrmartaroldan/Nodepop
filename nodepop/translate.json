@@ -1,0 +1,35 @@
+{
+  "TOKEN_IS_NEEDED":{
+    "es":"Es necesario el token",
+    "en":"Token is needed"
+  },
+  "FAILED_TO_AUTHENTICATE_TOKEN":{
+    "es":"Fallo al autenticar el token",
+    "en":"Failer to authenticate token"
+  },
+  "PLATFORM_IS_NEEDED":{
+    "es":"La plataforma es necesaria",
+    "en":"Platform is needed"
+  },
+  "EMAIL_IS_NEEDED":{
+    "es":"El email es necesario",
+    "en":"Email is needed"
+  },
+  "PASSWORD_IS_NEEDED":{
+    "es":"La contraseña es necesaria",
+    "en":"Password is needed"
+  },
+  "NAME_IS_NEEDED":{
+    "es":"El nombre es necesario",
+    "en":"Name is needed"
+  },
+  "AUTHENTICATION_FAILED_USER_NOT_FOUND":{
+    "es":"Autenticación fallida. Usuario no encontrado",
+    "en":"Authentication failed. User not found"
+  },
+  "AUTHENTICATION_FAILED_INVALID_PASSWORD":{
+    "es":"Autenticación fallida. Contraseña incorrecta",
+    "en":"Authentication failed. Invalid password"
+  }
+
+}

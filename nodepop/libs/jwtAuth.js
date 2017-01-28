@@ -5,8 +5,9 @@
  */
 var jwt = require('jsonwebtoken');
 var config = require('../local_config');
+var translate = require('../translate.json');
 var configJWT = config.jwt;
-var translate = require('google-translate')(config.api.key);
+var googleTranslate = require('google-translate')(config.api.key);
 /**
  * JWT auth middleware for use with Express 4.x.
  *
@@ -26,9 +27,14 @@ module.exports = function() {
             // verifies secret and checks exp
             jwt.verify(token, configJWT.secret, function(err, decoded) {
                 if (err) {
-                    translate.translate('Failed to authenticate token.', language, function(err, translated) {
-                        return res.json({ ok: false, error: {code: 401, message: translated.translatedText}});
-                    });
+                    var message = translate.FAILED_TO_AUTHENTICATE_TOKEN;
+                    if (language == 'es'){
+                        message = message.es
+                    }else if (language == 'en'){
+                        message = message.en
+                    }
+                    return res.json({ ok: false, error: {code: 401, message: message}});
+
 
                 } else {
                     // if everything is good, save to request for use in other routes
@@ -38,12 +44,18 @@ module.exports = function() {
             });
         } else {
             // if there is no token return error
-            translate.translate('Token is needed', language, function(err, translated) {
+            var message = translate.TOKEN_IS_NEEDED;
+            if (language == 'es'){
+                message = message.es
+            }else if (language == 'en'){
+                message = message.en
+            }
+
                 return res.status(403).json({
                     ok: false,
-                    error: { code: 403, message: translated.translatedText}
+                    error: { code: 403, message: message}
                 });
-            });
+
 
         }
     };
